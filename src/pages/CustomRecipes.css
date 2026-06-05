@@ -1,0 +1,206 @@
+.custom-page__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.page-title {
+  font-size: 24px;
+  font-weight: 800;
+}
+
+/* 表单 */
+.custom-page__form {
+  margin-bottom: 20px;
+}
+
+.custom-page__form h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.form-group {
+  margin-bottom: 14px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 6px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 2px solid #eee;
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--color-primary);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.form-row {
+  display: flex;
+  gap: 12px;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+.form-chips {
+  display: flex;
+  gap: 8px;
+}
+
+.chip {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 2px solid #eee;
+  background: white;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.chip--active {
+  border-color: var(--color-primary);
+  background: var(--color-surface);
+  color: var(--color-primary-dark);
+  font-weight: 600;
+}
+
+.form-checks {
+  display: flex;
+  gap: 16px;
+}
+
+.form-check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.form-check input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-primary);
+}
+
+/* 过滤 */
+.custom-page__filter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: white;
+  border: 2px solid #eee;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.filter-btn--active {
+  border-color: var(--color-primary);
+  background: var(--color-surface);
+  color: var(--color-primary-dark);
+  font-weight: 600;
+}
+
+.custom-page__count {
+  margin-left: auto;
+  font-size: 13px;
+  color: var(--color-text-light);
+}
+
+/* 列表 */
+.recipe-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  padding: 14px 16px;
+}
+
+.recipe-list-item__info h4 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.badge {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 500;
+}
+
+.badge--preset {
+  background: var(--color-surface);
+  color: var(--color-primary-dark);
+}
+
+.recipe-list-item__meta {
+  display: flex;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--color-text-light);
+  flex-wrap: wrap;
+}
+
+.btn--delete {
+  background: none;
+  font-size: 20px;
+  padding: 8px;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+.btn--delete:hover {
+  opacity: 1;
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--color-text-light);
+}
+
+.empty-state__emoji {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+.empty-state p {
+  font-size: 15px;
+}

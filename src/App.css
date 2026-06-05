@@ -1,0 +1,248 @@
+:root {
+  --color-primary: #FF8C42;
+  --color-primary-dark: #E67A35;
+  --color-accent: #E85D3F;
+  --color-bg: #FFFAF5;
+  --color-surface: #FFF3E0;
+  --color-surface-green: #F0F7F0;
+  --color-text: #5D5A58;
+  --color-text-light: #8A8785;
+  --radius: 16px;
+  --radius-sm: 10px;
+  --shadow: 0 2px 12px rgba(93, 90, 88, 0.08);
+  --shadow-hover: 0 4px 20px rgba(93, 90, 88, 0.15);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100dvh;
+}
+
+.app {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 20px 16px;
+  min-height: 100dvh;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ===== 通用按钮 ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 24px;
+  border-radius: var(--radius);
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  min-height: 44px;
+}
+
+.btn:active {
+  transform: scale(0.96);
+}
+
+.btn--primary {
+  background: var(--color-primary);
+  color: white;
+  box-shadow: 0 4px 14px rgba(255, 140, 66, 0.35);
+}
+
+.btn--primary:hover {
+  background: var(--color-primary-dark);
+}
+
+.btn--secondary {
+  background: white;
+  color: var(--color-text);
+  border: 2px solid #eee;
+}
+
+.btn--secondary:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.btn--large {
+  padding: 16px 32px;
+  font-size: 18px;
+  border-radius: 20px;
+}
+
+.btn--block {
+  width: 100%;
+}
+
+/* ===== 卡片基类 ===== */
+.card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* ===== 动效 ===== */
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  50% {
+    transform: scale(1.04);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-bounce-in {
+  animation: bounceIn 0.4s ease;
+}
+
+.animate-fade-in {
+  animation: fadeInUp 0.4s ease;
+}
+
+/* ===== 加载状态 ===== */
+.loading-skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-sm);
+}
+
+/* ===== Toast/提示 ===== */
+.toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-text);
+  color: white;
+  padding: 12px 24px;
+  border-radius: var(--radius);
+  font-size: 14px;
+  z-index: 1000;
+  animation: fadeInUp 0.3s ease;
+}
+
+/* ===== 底部弹窗 ===== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 999;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.modal-sheet {
+  background: white;
+  border-radius: 20px 20px 0 0;
+  padding: 24px 20px 32px;
+  width: 100%;
+  max-width: 480px;
+  animation: fadeInUp 0.3s ease;
+}
+
+.modal-sheet__title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.modal-sheet button {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 8px;
+  border-radius: var(--radius);
+  font-size: 16px;
+  font-weight: 600;
+  background: var(--color-surface);
+  color: var(--color-text);
+  transition: all 0.2s;
+}
+
+.modal-sheet button:active {
+  background: var(--color-primary);
+  color: white;
+}
+
+.modal-sheet__cancel {
+  background: transparent !important;
+  color: var(--color-text-light) !important;
+  font-weight: 500 !important;
+}
+
+/* ===== 返回按钮 ===== */
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  color: var(--color-text-light);
+  font-size: 15px;
+  padding: 8px 0;
+  margin-bottom: 16px;
+}
+
+.back-btn:hover {
+  color: var(--color-primary);
+}
+
+/* ===== 响应式 ===== */
+@media (min-width: 768px) {
+  .app {
+    padding: 32px 24px;
+  }
+}

@@ -1,0 +1,111 @@
+.family-page__card {
+  margin-bottom: 16px;
+}
+
+.family-page__total {
+  text-align: center;
+  font-size: 14px;
+  color: var(--color-text-light);
+  padding-top: 8px;
+  border-top: 1px solid #f0f0f0;
+  margin-top: 4px;
+}
+
+.family-page__section-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 12px;
+}
+
+/* 口味选择 */
+.taste-options {
+  display: flex;
+  gap: 8px;
+}
+
+.taste-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 14px 8px;
+  border-radius: var(--radius-sm);
+  background: #f9f9f9;
+  border: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.taste-btn--active {
+  border-color: var(--color-primary);
+  background: var(--color-surface);
+}
+
+.taste-btn__label {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.taste-btn__desc {
+  font-size: 12px;
+  color: var(--color-text-light);
+}
+
+.family-page__cta {
+  margin: 20px 0;
+}
+
+/* 错误 */
+.family-page__error {
+  background: #FFF3E0;
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  text-align: center;
+}
+
+.family-page__error p {
+  font-size: 15px;
+  color: var(--color-accent);
+  margin-bottom: 10px;
+}
+
+/* 加载 */
+.family-page__loading {
+  text-align: center;
+  padding: 40px 0;
+}
+
+.family-page__loading p {
+  margin-top: 12px;
+  font-size: 15px;
+  color: var(--color-text-light);
+}
+
+/* 菜单结果 */
+.meal-result {
+  margin-top: 20px;
+}
+
+.meal-result__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.meal-result__header h2 {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.meal-section {
+  margin-bottom: 20px;
+}
+
+.meal-section__title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--color-text);
+}

@@ -1,0 +1,58 @@
+.restaurant-card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow);
+  margin-top: 20px;
+}
+
+.restaurant-card__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.restaurant-card__icon {
+  font-size: 36px;
+}
+
+.restaurant-card__name {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.restaurant-card__info {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 8px;
+  font-size: 15px;
+}
+
+.restaurant-card__rating {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.restaurant-card__distance {
+  color: var(--color-text-light);
+}
+
+.restaurant-card__address {
+  font-size: 14px;
+  color: var(--color-text-light);
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.restaurant-card__actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.restaurant-card__actions .btn {
+  flex: 1;
+  min-width: 80px;
+}

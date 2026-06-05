@@ -1,0 +1,55 @@
+.number-picker {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+}
+
+.number-picker__label {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.number-picker__controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.number-picker__btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: white;
+  border: 2px solid #eee;
+  font-size: 24px;
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.number-picker__btn:hover:not(:disabled) {
+  border-color: var(--color-primary);
+  background: var(--color-surface);
+}
+
+.number-picker__btn:active:not(:disabled) {
+  transform: scale(0.9);
+}
+
+.number-picker__btn:disabled {
+  color: #ccc;
+  border-color: #f0f0f0;
+  cursor: not-allowed;
+}
+
+.number-picker__value {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-primary);
+  min-width: 32px;
+  text-align: center;
+}
