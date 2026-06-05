@@ -1,45 +1,70 @@
 .rccard {
-  background: var(--surface); border-radius: var(--radius-lg); padding: 20px 18px 18px;
+  background: linear-gradient(175deg, var(--surface) 0%, rgba(255,248,242,0.7) 100%);
+  border-radius: var(--radius-lg); padding: 22px 20px 18px;
   margin-bottom: 16px; box-shadow: var(--shadow-sm);
-  border: 1px solid rgba(87,66,40,0.08);
+  border: 1px solid rgba(87,66,40,0.06);
   border-left: 5px solid var(--orange-500);
+  position: relative;
 }
-.rccard-child { border-left-color: var(--green-500); background: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(250,255,250,0.92) 100%); }
+.rccard::before {
+  content: ''; position: absolute; top: 10px; right: 16px;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--orange-300); opacity: 0.4;
+}
+.rccard-child {
+  border-left-color: var(--green-500);
+  background: linear-gradient(175deg, rgba(255,255,255,0.9) 0%, rgba(245,252,246,0.85) 100%);
+}
+.rccard-child::before { background: var(--green-500); }
 
-.rccard-head { display: flex; gap: 14px; margin-bottom: 16px; }
+.rccard-head { display: flex; gap: 14px; margin-bottom: 18px; }
 .rccard-emoji-bg {
-  width: 48px; height: 48px; border-radius: 14px;
-  background: var(--orange-50); display: flex;
-  align-items: center; justify-content: center; font-size: 26px; flex-shrink: 0;
+  width: 52px; height: 52px; border-radius: 16px;
+  background: linear-gradient(135deg, var(--orange-50), #FFE8D8);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; flex-shrink: 0;
+  box-shadow: inset 0 2px 4px rgba(255,255,255,0.8);
 }
-.rccard-child .rccard-emoji-bg { background: var(--green-100); }
+.rccard-child .rccard-emoji-bg {
+  background: linear-gradient(135deg, var(--green-100), #E0F5E8);
+}
 
 .rccard-head-info { flex: 1; min-width: 0; }
-.rccard-head-info h3 { font-size: 20px; font-weight: 900; margin-bottom: 8px; }
+.rccard-head-info h3 { font-size: 21px; font-weight: 900; margin-bottom: 8px; letter-spacing: 0; }
 .rccard-chips { display: flex; gap: 6px; flex-wrap: wrap; }
 
-.chip { font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 999px; }
+.chip { font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 999px; }
 .chip-time { background: var(--gray-100); color: var(--gray-700); }
 .chip-taste { background: var(--orange-50); color: var(--orange-500); }
 .chip-audience { background: var(--orange-50); color: var(--orange-500); }
 .chip-audience-child { background: var(--green-100); color: var(--green-500); }
 
-.rccard-section { margin-bottom: 14px; }
+.rccard-section { margin-bottom: 16px; }
 .rccard-section:last-child { margin-bottom: 0; }
-.rccard-section h4 { font-size: 15px; font-weight: 700; margin-bottom: 10px; color: var(--gray-900); }
-
-.rccard-ingredients { display: flex; flex-wrap: wrap; gap: 6px; }
-.ing-badge {
-  font-size: 13px; padding: 6px 12px; border-radius: 20px;
-  background: var(--gray-50); color: var(--gray-700); font-weight: 500; border: 1px solid var(--gray-100);
+.rccard-section h4 {
+  font-size: 14px; font-weight: 800; margin-bottom: 10px;
+  color: var(--gray-700); letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
-.rccard-child .ing-badge { background: var(--green-100); border-color: transparent; }
 
-.rccard-steps { display: flex; flex-direction: column; gap: 10px; }
-.step-row { display: flex; gap: 12px; font-size: 14px; color: var(--gray-700); line-height: 1.6; align-items: flex-start; }
+.rccard-ingredients { display: flex; flex-wrap: wrap; gap: 8px; }
+.ing-badge {
+  font-size: 13px; padding: 7px 14px; border-radius: 999px;
+  background: white; color: var(--gray-700); font-weight: 600;
+  border: 1px solid rgba(87,66,40,0.10);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+.rccard-child .ing-badge { background: white; border-color: rgba(47,155,105,0.15); }
+
+.rccard-steps { display: flex; flex-direction: column; gap: 12px; }
+.step-row {
+  display: flex; gap: 14px; font-size: 14px; color: var(--gray-700);
+  line-height: 1.7; align-items: flex-start;
+}
 .step-num {
-  flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%;
-  background: var(--orange-500); color: white; font-size: 12px; font-weight: 700;
-  display: flex; align-items: center; justify-content: center; margin-top: 1px;
+  flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%;
+  background: var(--gray-900); color: white;
+  font-size: 12px; font-weight: 800; display: flex;
+  align-items: center; justify-content: center; margin-top: 1px;
 }
 .rccard-child .step-num { background: var(--green-500); }

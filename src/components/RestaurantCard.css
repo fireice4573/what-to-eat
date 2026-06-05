@@ -1,54 +1,70 @@
 .rcard {
   background: var(--surface); border-radius: var(--radius-xl);
-  padding: 24px 20px 20px; box-shadow: var(--shadow-lg);
+  padding: 28px 22px 22px; box-shadow: var(--shadow-lg);
   margin-bottom: 8px; position: relative; overflow: hidden;
   border: 1px solid rgba(87,66,40,0.08);
 }
 .rcard::before {
-  content: ''; position: absolute; top: -40px; right: -30px;
-  width: 100px; height: 100px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,130,50,0.08) 0%, transparent 70%);
+  content: ''; position: absolute; top: -60px; right: -40px;
+  width: 140px; height: 140px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(243,107,42,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+.rcard::after {
+  content: ''; position: absolute; bottom: -30px; left: -20px;
+  width: 80px; height: 80px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(47,155,105,0.05) 0%, transparent 70%);
+  pointer-events: none;
 }
 
 .rcard-badge {
-  display: inline-block; background: var(--gray-900);
-  color: white; font-size: 14px; font-weight: 700; padding: 6px 18px;
-  border-radius: 999px; margin-bottom: 18px; letter-spacing: 0;
-  box-shadow: var(--shadow-sm);
+  display: inline-flex; align-items: center; gap: 6px;
+  background: linear-gradient(135deg, var(--orange-500), var(--red-500));
+  color: white; font-size: 15px; font-weight: 800; padding: 8px 22px;
+  border-radius: 999px; margin-bottom: 20px;
+  box-shadow: 0 6px 20px rgba(243,107,42,0.30);
+  letter-spacing: 1px;
 }
 
 .rcard-icon-row {
-  display: flex; align-items: center; gap: 14px; margin-bottom: 16px;
+  display: flex; align-items: center; gap: 14px; margin-bottom: 18px;
 }
 .rcard-icon-circle {
-  width: 52px; height: 52px; border-radius: 16px; background: var(--orange-50);
-  display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0;
+  width: 56px; height: 56px; border-radius: 18px;
+  background: linear-gradient(135deg, var(--orange-50), #FFE8D8);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 30px; flex-shrink: 0;
+  box-shadow: inset 0 2px 4px rgba(255,255,255,0.8);
 }
 .rcard-name-col { flex:1; min-width: 0; }
-.rcard-name-col h2 { font-size: 22px; font-weight: 800; margin-bottom: 6px; word-break: break-all; }
+.rcard-name-col h2 {
+  font-size: 24px; font-weight: 900; margin-bottom: 8px;
+  word-break: break-all; letter-spacing: 0;
+}
 .rcard-tags { display: flex; gap: 8px; }
-.rtag { font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 12px; }
+.rtag { font-size: 13px; font-weight: 700; padding: 4px 12px; border-radius: 999px; }
 .rtag-rating { background: var(--orange-50); color: var(--orange-500); }
 .rtag-dist { background: var(--gray-100); color: var(--gray-700); }
 
 .rcard-addr {
-  display: flex; gap: 8px; padding: 12px; background: var(--gray-50);
-  border-radius: 12px; margin-bottom: 18px;
+  display: flex; gap: 10px; padding: 14px 16px;
+  background: linear-gradient(135deg, var(--gray-50), rgba(255,248,242,0.5));
+  border-radius: 14px; margin-bottom: 20px; align-items: flex-start;
 }
-.rcard-addr p { font-size: 14px; color: var(--gray-700); line-height: 1.5; }
+.rcard-addr p { font-size: 14px; color: var(--gray-700); line-height: 1.6; }
 
-.rcard-actions { display: flex; gap: 8px; }
+.rcard-actions { display: flex; gap: 10px; }
 .ract {
-  flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;
-  padding: 12px 6px; border-radius: 12px; font-size: 13px; font-weight: 700;
+  flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px;
+  padding: 14px 6px; border-radius: 14px; font-size: 13px; font-weight: 700;
   transition: all 0.2s;
 }
 .ract:active { transform: scale(0.95); }
 .ract-outline { background: var(--gray-50); color: var(--gray-700); }
 .ract-outline:active { background: var(--orange-50); }
 .ract-primary {
-  background: linear-gradient(135deg, var(--orange-500), #FF8E45);
-  color: white; box-shadow: var(--shadow-orange);
+  background: var(--gray-900); color: white;
+  box-shadow: 0 4px 14px rgba(25,23,20,0.20);
 }
-.ract-primary:active { box-shadow: 0 2px 8px rgba(255,122,47,0.3); }
-.ract span { font-size: 20px; }
+.ract-primary:active { background: var(--gray-700); }
+.ract span { font-size: 22px; }
