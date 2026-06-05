@@ -1,20 +1,18 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { generateMealPlan } from '../utils/algorithm'
-import { getAllRecipes } from '../utils/algorithm'
+import { generateMealPlan, getAllRecipes } from '../utils/algorithm'
 import NumberPicker from '../components/NumberPicker'
 import RecipeCard from '../components/RecipeCard'
 import './Family.css'
 
-const TASTE_OPTIONS = [
-  { value: 'light', label: '🥗 清淡', desc: '少油少盐' },
-  { value: 'medium', label: '🍚 适中', desc: '家常口味' },
-  { value: 'heavy', label: '🌶️ 重口', desc: '无辣不欢' },
+const TASTES = [
+  { value:'light', label:'🥗 清淡', desc:'少油少盐' },
+  { value:'medium', label:'🍚 适中', desc:'家常口味' },
+  { value:'heavy', label:'🌶️ 重口', desc:'无辣不欢' },
 ]
 
 export default function Family() {
   const navigate = useNavigate()
-
   const [adults, setAdults] = useState(1)
   const [children, setChildren] = useState(0)
   const [taste, setTaste] = useState('medium')
@@ -25,205 +23,100 @@ export default function Family() {
   const [toast, setToast] = useState('')
 
   const handleGenerate = () => {
-    if (adults + children === 0) {
-      setError('至少得有一个人吃饭吧～')
-      return
-    }
-
-    const allRecipes = getAllRecipes()
-    if (allRecipes.length < 3) {
-      setError('菜谱库快空了，先去加点菜吧～')
-      return
-    }
-
-    setLoading(true)
-    setError('')
-    setMealPlan(null)
-
-    // 加一点延迟让加载动画可见
-    setTimeout(() => {
-      const plan = generateMealPlan(adults, children, taste)
-      setMealPlan(plan)
+    if (adults+children===0) { setError('至少得有一个人吃饭吧～'); return }
+    const all = getAllRecipes()
+    if (all.length<3) { setError('菜谱库快空了，先去加点菜吧～'); return }
+    setLoading(true); setError(''); setMealPlan(null)
+    setTimeout(()=>{
+      setMealPlan(generateMealPlan(adults,children,taste))
       setLoading(false)
-    }, 600)
+    },600)
   }
 
-  const handleShare = () => {
-    if (!mealPlan) return
-    const allDishes = [
-      ...mealPlan.adultDishes.map(d => d.name),
-      ...mealPlan.childDishes.map(d => d.name),
-      ...mealPlan.soups.map(d => d.name)
-    ]
-    const text = `🍳 今晚 ${adults}大人${children > 0 ? '+' + children + '小孩' : ''}：${allDishes.join(' · ')}，你家今晚吃什么？`
-    const url = window.location.origin + '/family'
+  const buildShareText = () => {
+    if (!mealPlan) return ''
+    const dishes = [...mealPlan.adultDishes.map(d=>d.name), ...mealPlan.childDishes.map(d=>d.name), ...mealPlan.soups.map(d=>d.name)]
+    return `🍳 今晚 ${adults}大人${children>0?'+'+children+'小孩':''}：${dishes.join(' · ')}，你家今晚吃什么？`
+  }
 
-    if (navigator.share) {
-      navigator.share({ title: '今天吃啥 - 家庭菜单', text, url }).catch(() => {})
-    } else {
-      copyFamilyText(text, url)
+  const doShare = (mode) => {
+    const text = buildShareText(); const url = window.location.origin+'/family'
+    if (mode==='native' && navigator.share) { navigator.share({title:'今天吃啥·家庭菜单',text,url}).catch(()=>{}) }
+    else {
+      if (navigator.clipboard) { navigator.clipboard.writeText(text+' '+url).then(()=>setToast('已复制！')) }
+      else { setToast('复制失败') }
     }
     setShowShare(false)
   }
-
-  const handleCopyShare = () => {
-    if (!mealPlan) return
-    const allDishes = [
-      ...mealPlan.adultDishes.map(d => d.name),
-      ...mealPlan.childDishes.map(d => d.name),
-      ...mealPlan.soups.map(d => d.name)
-    ]
-    const text = `🍳 今晚 ${adults}大人${children > 0 ? '+' + children + '小孩' : ''}：${allDishes.join(' · ')}，你家今晚吃什么？`
-    const url = window.location.origin + '/family'
-    copyFamilyText(text, url)
-    setShowShare(false)
-  }
-
-  const copyFamilyText = (text, url) => {
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(text + ' ' + url).then(() => setToast('已复制！去粘贴给朋友吧'))
-    } else {
-      setToast('复制失败，请长按手动复制')
-    }
-  }
-
-  const totalPeople = adults + children
 
   return (
     <div className="family-page">
-      <button className="back-btn" onClick={() => navigate('/')}>
-        ← 首页
-      </button>
+      <button className="back-btn" onClick={()=>navigate('/')}>← 首页</button>
+      <div className="family-header">
+        <h1 className="page-title">家庭吃啥</h1>
+        <p className="page-subtitle">按人数搭配，大人小孩分开</p>
+      </div>
 
-      <h1 className="page-title">家庭吃啥 👨‍👩‍👧‍👦</h1>
-
-      {/* 人数选择 */}
-      <div className="family-page__card card">
+      {/* 人数 */}
+      <div className="card family-card">
         <NumberPicker label="👨‍👩‍👧 大人" value={adults} onChange={setAdults} max={10} />
+        <div className="family-divider" />
         <NumberPicker label="🧒 小孩" value={children} onChange={setChildren} max={10} />
-        {totalPeople > 0 && (
-          <p className="family-page__total">
-            共 {totalPeople} 人
-            {children > 0 ? `（其中 ${children} 位小朋友）` : ''}
-            {totalPeople <= 2 ? ' → 2菜1汤' : totalPeople <= 4 ? ' → 3菜1汤' : ' → 4菜1汤'}
-          </p>
+        {adults+children>0 && (
+          <div className="family-summary">
+            共 {adults+children} 人  ·  {adults+children<=2?'2菜1汤':adults+children<=4?'3菜1汤':'4菜1汤'}
+            {children>0 && `  ·  含${Math.max(1,Math.ceil(children/2))}道小孩菜`}
+          </div>
         )}
       </div>
 
-      {/* 口味选择 */}
-      <div className="family-page__card card">
-        <p className="family-page__section-label">口味偏好</p>
-        <div className="taste-options">
-          {TASTE_OPTIONS.map(opt => (
-            <button
-              key={opt.value}
-              className={`taste-btn ${taste === opt.value ? 'taste-btn--active' : ''}`}
-              onClick={() => setTaste(opt.value)}
-            >
-              <span className="taste-btn__label">{opt.label}</span>
-              <span className="taste-btn__desc">{opt.desc}</span>
+      {/* 口味 */}
+      <div className="card family-card">
+        <p className="flabel">口味偏好</p>
+        <div className="taste-row">
+          {TASTES.map(t=>(
+            <button key={t.value} className={`taste-btn ${taste===t.value?'taste-active':''}`}
+              onClick={()=>setTaste(t.value)}>
+              <span className="taste-label">{t.label}</span>
+              <span className="taste-desc">{t.desc}</span>
             </button>
           ))}
         </div>
       </div>
 
-      {/* 生成按钮 */}
-      <button
-        className="btn btn--primary btn--large btn--block family-page__cta"
-        onClick={handleGenerate}
-        disabled={loading}
-      >
-        {loading ? '正在搭配中… 🍳' : '🔥 开始做菜'}
+      {/* CTA */}
+      <button className="btn btn-primary btn-lg btn-block" style={{margin:'8px 0 20px'}}
+        onClick={handleGenerate} disabled={loading}>
+        {loading ? '搭配中…' : '🔥 开始做菜'}
       </button>
 
-      {/* 错误 */}
-      {error && (
-        <div className="family-page__error">
-          <p>{error}</p>
-          {error.includes('菜谱库') && (
-            <button className="btn btn--secondary" onClick={() => navigate('/custom-recipes')}>
-              📖 去添加菜谱
-            </button>
-          )}
-        </div>
-      )}
+      {error && <div className="error-box anim-fade-up"><p>{error}</p>{error.includes('菜谱库')&&<button className="btn btn-secondary" style={{marginTop:8}} onClick={()=>navigate('/custom-recipes')}>📖 去添加菜谱</button>}</div>}
+      {loading && <div className="loading-area"><div className="loading-dots"><span className="dot"/><span className="dot"/><span className="dot"/></div><p>搭配营养均衡的一桌菜…</p></div>}
 
-      {/* 加载 */}
-      {loading && (
-        <div className="family-page__loading">
-          <div className="loading-dots">
-            <span className="dot" />
-            <span className="dot" />
-            <span className="dot" />
-          </div>
-          <p>正在搭配营养均衡的菜单…</p>
-        </div>
-      )}
-
-      {/* 菜单结果 */}
       {mealPlan && !loading && (
-        <div className="meal-result animate-fade-in">
-          <div className="meal-result__header">
+        <div className="meal-result anim-fade-up">
+          <div className="meal-header">
             <h2>📋 今日菜单</h2>
-            <button className="btn btn--secondary" onClick={() => setShowShare(true)}>
-              📤 分享菜单
-            </button>
+            <button className="btn btn-secondary" style={{padding:'10px 16px',fontSize:'14px'}} onClick={()=>setShowShare(true)}>📤 分享</button>
           </div>
-
-          {/* 大人菜 */}
-          {mealPlan.adultDishes.length > 0 && (
-            <div className="meal-section">
-              <h3 className="meal-section__title">👨‍👩‍👧 大人菜</h3>
-              {mealPlan.adultDishes.map(dish => (
-                <RecipeCard key={dish.id} recipe={dish} audience="adult" />
-              ))}
-            </div>
-          )}
-
-          {/* 小孩菜 */}
-          {mealPlan.childDishes.length > 0 && (
-            <div className="meal-section">
-              <h3 className="meal-section__title">🧒 小孩菜</h3>
-              {mealPlan.childDishes.map(dish => (
-                <RecipeCard key={dish.id} recipe={dish} audience="child" />
-              ))}
-            </div>
-          )}
-
-          {/* 汤 */}
-          {mealPlan.soups.length > 0 && (
-            <div className="meal-section">
-              <h3 className="meal-section__title">🍲 汤</h3>
-              {mealPlan.soups.map(dish => (
-                <RecipeCard key={dish.id} recipe={dish} audience="adult" />
-              ))}
-            </div>
-          )}
+          {mealPlan.adultDishes.length>0 && <div className="meal-group"><h3>👨‍👩‍👧 大人菜</h3>{mealPlan.adultDishes.map(d=><RecipeCard key={d.id} recipe={d} audience="adult"/>)}</div>}
+          {mealPlan.childDishes.length>0 && <div className="meal-group"><h3>🧒 小孩菜</h3>{mealPlan.childDishes.map(d=><RecipeCard key={d.id} recipe={d} audience="child"/>)}</div>}
+          {mealPlan.soups.length>0 && <div className="meal-group"><h3>🍲 汤</h3>{mealPlan.soups.map(d=><RecipeCard key={d.id} recipe={d} audience="adult"/>)}</div>}
         </div>
       )}
 
-      {/* 分享弹窗 */}
       {showShare && (
-        <div className="modal-overlay" onClick={() => setShowShare(false)}>
-          <div className="modal-sheet" onClick={e => e.stopPropagation()}>
-            <h3 className="modal-sheet__title">分享菜单</h3>
-            {navigator.share ? (
-              <button onClick={handleShare}>📤 直接分享</button>
-            ) : null}
-            <button onClick={handleCopyShare}>📋 复制文案</button>
-            <button className="modal-sheet__cancel" onClick={() => setShowShare(false)}>
-              取消
-            </button>
+        <div className="modal-overlay" onClick={()=>setShowShare(false)}>
+          <div className="modal-sheet" onClick={e=>e.stopPropagation()}>
+            <h3>分享菜单</h3>
+            {navigator.share && <button onClick={()=>doShare('native')}>📤 直接分享</button>}
+            <button onClick={()=>doShare('copy')}>📋 复制文案</button>
+            <button className="cancel-btn" onClick={()=>setShowShare(false)}>取消</button>
           </div>
         </div>
       )}
 
-      {/* Toast */}
-      {toast && (
-        <div className="toast" onClick={() => setToast('')}>
-          {toast}
-        </div>
-      )}
+      {toast && <div className="toast" onClick={()=>setToast('')}>{toast}</div>}
     </div>
   )
 }

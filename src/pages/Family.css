@@ -1,143 +1,39 @@
-.family-page__card {
-  margin-bottom: 16px;
-  border-radius: var(--radius);
-  background: white;
-  padding: 20px;
-  box-shadow: var(--shadow-sm);
+.family-page { padding: 0 20px 32px; }
+.family-header { margin-bottom: 20px; }
+.family-header .page-title { margin-bottom: 4px; }
+
+.family-card { margin-bottom: 14px; }
+.family-divider { height:1px; background: var(--gray-100); margin:4px 0; }
+
+.family-summary {
+  text-align:center; font-size:14px; font-weight:600; color: var(--orange-500);
+  padding-top:12px; border-top:1px solid var(--gray-100); margin-top:8px;
+  display:flex; align-items:center; justify-content:center; gap:6px;
 }
 
-.family-page__total {
-  text-align: center;
-  font-size: 14px;
-  color: var(--color-text-medium);
-  font-weight: 600;
-  padding-top: 12px;
-  border-top: 1px solid #f5f0eb;
-  margin-top: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-
-.family-page__total::before {
-  content: '🍽️';
-  font-size: 18px;
-}
-
-.family-page__section-label {
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--color-text);
-  margin-bottom: 14px;
-}
-
-/* 口味选择 */
-.taste-options {
-  display: flex;
-  gap: 10px;
-}
-
+.flabel { font-size:15px; font-weight:700; margin-bottom:14px; }
+.taste-row { display:flex; gap:8px; }
 .taste-btn {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 16px 8px;
-  border-radius: var(--radius);
-  background: #fafafa;
-  border: 2px solid transparent;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  flex:1; display:flex; flex-direction:column; align-items:center; padding:14px 6px;
+  border-radius: var(--radius); background: var(--gray-50);
+  border:2px solid transparent; transition:all 0.2s;
 }
+.taste-active { border-color:var(--orange-500); background:var(--white); box-shadow:var(--shadow); }
+.taste-label { font-size:15px; font-weight:700; color:var(--gray-700); margin-bottom:2px; }
+.taste-active .taste-label { color:var(--orange-500); }
+.taste-desc { font-size:11px; color:var(--gray-500); }
 
-.taste-btn--active {
-  border-color: var(--color-primary);
-  background: var(--color-bg-warm);
-  box-shadow: var(--shadow-glow);
-  transform: translateY(-1px);
+.error-box {
+  background:white; border-radius:var(--radius); padding:18px; text-align:center;
+  border-left:4px solid var(--red-500); margin-bottom:16px;
 }
+.error-box p { font-size:15px; color:var(--red-500); font-weight:500; }
 
-.taste-btn__label {
-  font-size: 16px;
-  font-weight: 700;
-  margin-bottom: 4px;
-  color: var(--color-text);
-}
+.loading-area { text-align:center; padding:40px 0; }
+.loading-area p { margin-top:12px; font-size:15px; color:var(--gray-500); }
 
-.taste-btn--active .taste-btn__label {
-  color: var(--color-primary-dark);
-}
-
-.taste-btn__desc {
-  font-size: 12px;
-  color: var(--color-text-light);
-}
-
-.family-page__cta {
-  margin: 24px 0;
-  font-size: 20px;
-}
-
-/* 错误 */
-.family-page__error {
-  background: white;
-  border-radius: var(--radius);
-  padding: 20px;
-  text-align: center;
-  box-shadow: var(--shadow-sm);
-  border-left: 4px solid var(--color-accent);
-}
-
-.family-page__error p {
-  font-size: 15px;
-  color: var(--color-accent);
-  margin-bottom: 12px;
-}
-
-/* 加载 */
-.family-page__loading {
-  text-align: center;
-  padding: 48px 0;
-}
-
-.family-page__loading p {
-  margin-top: 16px;
-  font-size: 16px;
-  color: var(--color-text-light);
-  font-weight: 500;
-}
-
-/* 菜单结果 */
-.meal-result {
-  margin-top: 24px;
-}
-
-.meal-result__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-
-.meal-result__header h2 {
-  font-size: 24px;
-  font-weight: 800;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.meal-section {
-  margin-bottom: 8px;
-}
-
-.meal-section__title {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 14px;
-  color: var(--color-text);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding-left: 4px;
-}
+.meal-result { margin-top:20px; }
+.meal-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; }
+.meal-header h2 { font-size:24px; font-weight:800; }
+.meal-group { margin-bottom:8px; }
+.meal-group h3 { font-size:18px; font-weight:700; margin-bottom:14px; padding-left:4px; }

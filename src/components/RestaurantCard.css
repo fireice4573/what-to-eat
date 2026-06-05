@@ -1,172 +1,53 @@
-.restaurant-card {
-  position: relative;
-  background: white;
-  border-radius: 24px;
-  padding: 28px 24px 20px;
-  margin-top: 24px;
-  box-shadow: var(--shadow-lg);
-  overflow: hidden;
+.rcard {
+  background: white; border-radius: var(--radius-xl);
+  padding: 24px 20px 20px; box-shadow: var(--shadow-lg);
+  margin-bottom: 8px; position: relative; overflow: hidden;
+}
+.rcard::before {
+  content: ''; position: absolute; top: -40px; right: -30px;
+  width: 100px; height: 100px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,130,50,0.08) 0%, transparent 70%);
 }
 
-.restaurant-card__glow {
-  position: absolute;
-  top: -40px;
-  right: -20px;
-  width: 120px;
-  height: 120px;
-  background: radial-gradient(circle, rgba(255,140,66,0.1) 0%, transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
+.rcard-badge {
+  display: inline-block; background: linear-gradient(135deg, var(--orange-500), var(--red-500));
+  color: white; font-size: 14px; font-weight: 700; padding: 6px 18px;
+  border-radius: 20px; margin-bottom: 18px; letter-spacing: 1px;
+  box-shadow: 0 4px 12px rgba(255,122,47,0.3);
 }
 
-/* 命中印章 */
-.restaurant-card__stamp {
-  text-align: center;
-  margin-bottom: 20px;
+.rcard-icon-row {
+  display: flex; align-items: center; gap: 14px; margin-bottom: 16px;
 }
+.rcard-icon-circle {
+  width: 52px; height: 52px; border-radius: 16px; background: var(--orange-50);
+  display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0;
+}
+.rcard-name-col { flex:1; min-width: 0; }
+.rcard-name-col h2 { font-size: 22px; font-weight: 800; margin-bottom: 6px; word-break: break-all; }
+.rcard-tags { display: flex; gap: 8px; }
+.rtag { font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 12px; }
+.rtag-rating { background: var(--orange-50); color: var(--orange-500); }
+.rtag-dist { background: var(--gray-100); color: var(--gray-700); }
 
-.restaurant-card__stamp span {
-  display: inline-block;
-  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
-  color: white;
-  font-size: 14px;
-  font-weight: 700;
-  padding: 6px 20px;
-  border-radius: 20px;
-  letter-spacing: 2px;
-  box-shadow: 0 4px 12px rgba(255,140,66,0.3);
+.rcard-addr {
+  display: flex; gap: 8px; padding: 12px; background: var(--gray-50);
+  border-radius: 12px; margin-bottom: 18px;
 }
+.rcard-addr p { font-size: 14px; color: var(--gray-700); line-height: 1.5; }
 
-/* 主信息区 */
-.restaurant-card__main {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 16px;
+.rcard-actions { display: flex; gap: 8px; }
+.ract {
+  flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: 12px 6px; border-radius: 14px; font-size: 13px; font-weight: 600;
+  transition: all 0.2s;
 }
-
-.restaurant-card__icon-wrap {
-  width: 56px;
-  height: 56px;
-  border-radius: 18px;
-  background: var(--color-bg-warm);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+.ract:active { transform: scale(0.95); }
+.ract-outline { background: var(--gray-50); color: var(--gray-700); }
+.ract-outline:active { background: var(--orange-50); }
+.ract-primary {
+  background: linear-gradient(135deg, var(--orange-500), #FF8E45);
+  color: white; box-shadow: var(--shadow-orange);
 }
-
-.restaurant-card__icon {
-  font-size: 32px;
-}
-
-.restaurant-card__info-main {
-  flex: 1;
-  min-width: 0;
-}
-
-.restaurant-card__name {
-  font-size: 22px;
-  font-weight: 800;
-  color: var(--color-text);
-  margin-bottom: 8px;
-  word-break: break-all;
-}
-
-.restaurant-card__tags {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.restaurant-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 3px;
-  font-size: 13px;
-  font-weight: 600;
-  padding: 4px 10px;
-  border-radius: 14px;
-}
-
-.restaurant-tag--rating {
-  background: #FFF3E8;
-  color: var(--color-primary-dark);
-}
-
-.restaurant-tag--distance {
-  background: #F5F5F5;
-  color: var(--color-text-medium);
-}
-
-/* 地址 */
-.restaurant-card__address-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  padding: 14px;
-  background: var(--color-bg-warm);
-  border-radius: var(--radius-sm);
-  margin-bottom: 20px;
-}
-
-.restaurant-card__address-icon {
-  font-size: 16px;
-  flex-shrink: 0;
-  margin-top: 1px;
-}
-
-.restaurant-card__address {
-  font-size: 14px;
-  color: var(--color-text-medium);
-  line-height: 1.5;
-}
-
-/* 操作按钮 */
-.restaurant-card__actions {
-  display: flex;
-  gap: 10px;
-}
-
-.action-btn {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  padding: 12px 8px;
-  border-radius: var(--radius-sm);
-  background: #fafafa;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--color-text-medium);
-  transition: all 0.2s ease;
-}
-
-.action-btn span:first-child {
-  font-size: 20px;
-}
-
-.action-btn:active {
-  transform: scale(0.95);
-}
-
-.action-btn--reroll:hover {
-  background: #FFF3E8;
-  color: var(--color-primary-dark);
-}
-
-.action-btn--share:hover {
-  background: #E8F0FF;
-  color: #4A7DE0;
-}
-
-.action-btn--go {
-  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
-  color: white;
-  box-shadow: var(--shadow-glow);
-}
-
-.action-btn--go:hover {
-  box-shadow: 0 6px 20px rgba(255,140,66,0.4);
-}
+.ract-primary:active { box-shadow: 0 2px 8px rgba(255,122,47,0.3); }
+.ract span { font-size: 20px; }
