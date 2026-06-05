@@ -30,28 +30,32 @@ function getMealSize(adults, children) {
 }
 
 /**
- * 提取菜的主食材关键字（用于去重，避免一桌菜主料撞车）
+ * 提取菜的所有食材关键字（用于去重，检查前2个主要食材避免撞车）
  */
-function getMainIngredient(dish) {
-  if (!dish.ingredients || dish.ingredients.length === 0) return dish.name
-  const raw = dish.ingredients[0]
-  return raw
-    .replace(/[\d]+g|[\d]+个|[\d]+块|[\d]+条|[\d]+把|[\d]+勺|[\d]+罐|[\d]+颗|[\d]+根|[\d]+只/g, '')
-    .replace(/（[^）]*）/g, '')
-    .replace(/\([^)]*\)/g, '')
-    .replace(/或.*$/, '')
-    .replace(/\s+/g, '')
-    .trim()
-    .slice(0, 4)
+function getKeyIngredients(dish) {
+  if (!dish.ingredients || dish.ingredients.length === 0) return [dish.name]
+  return dish.ingredients.slice(0, 2).map(raw =>
+    raw
+      .replace(/[\d]+g|[\d]+个|[\d]+块|[\d]+条|[\d]+把|[\d]+勺|[\d]+罐|[\d]+颗|[\d]+根|[\d]+只/g, '')
+      .replace(/（[^）]*）/g, '')
+      .replace(/\([^)]*\)/g, '')
+      .replace(/或.*$/, '')
+      .replace(/\s+/g, '')
+      .trim()
+      .slice(0, 4)
+  )
 }
 
 /**
  * 随机抽取不重复主食材的菜
  */
 function pickDiverse(arr, count, alreadyPicked = []) {
-  const used = new Set(alreadyPicked.map(d => getMainIngredient(d)))
-  // 先挑主食材不撞的
-  const diverse = arr.filter(d => !used.has(getMainIngredient(d)))
+  const used = new Set(alreadyPicked.flatMap(d => getKeyIngredients(d)))
+  // 先挑主食材不撞的（菜的所有关键食材都不在已用集合中）
+  const diverse = arr.filter(d => {
+    const keys = getKeyIngredients(d)
+    return !keys.some(k => used.has(k))
+  })
   // 不够就回退到全量
   const pool = diverse.length >= count ? diverse : arr
   const shuffled = [...pool].sort(() => Math.random() - 0.5)
