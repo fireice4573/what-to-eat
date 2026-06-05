@@ -2,7 +2,13 @@ import './RecipeCard.css'
 
 const AUDIENCE_LABEL = {
   adult: '👨‍👩‍👧 大人菜',
-  child: '🧒 小孩菜'
+  child: '🧒 小孩专属'
+}
+
+const TASTE_EMOJI = {
+  light: '🥗',
+  medium: '🍚',
+  heavy: '🌶️'
 }
 
 const TASTE_LABEL = {
@@ -16,28 +22,52 @@ export default function RecipeCard({ recipe, audience }) {
 
   return (
     <div className={`recipe-card recipe-card--${audience} animate-fade-in`}>
-      <div className="recipe-card__header">
-        <h3 className="recipe-card__name">{recipe.name}</h3>
-        <span className="recipe-card__tag">{AUDIENCE_LABEL[audience] || ''}</span>
+      {/* 顶部便签夹 */}
+      <div className="recipe-card__clip" />
+
+      <div className="recipe-card__top">
+        <span className="recipe-card__emoji">{TASTE_EMOJI[recipe.taste] || '🍳'}</span>
+        <div className="recipe-card__top-info">
+          <h3 className="recipe-card__name">{recipe.name}</h3>
+          <div className="recipe-card__meta">
+            <span className="recipe-meta-tag">
+              ⏱️ {recipe.cookTime}分钟
+            </span>
+            <span className="recipe-meta-tag">
+              {TASTE_EMOJI[recipe.taste]} {TASTE_LABEL[recipe.taste]}
+            </span>
+            <span className="recipe-card__audience-badge">
+              {AUDIENCE_LABEL[audience]}
+            </span>
+          </div>
+        </div>
       </div>
-      <div className="recipe-card__meta">
-        <span>⏱️ {recipe.cookTime}分钟</span>
-        <span>🌶️ {TASTE_LABEL[recipe.taste] || recipe.taste}</span>
-        <span>{recipe.category}</span>
-      </div>
-      <div className="recipe-card__ingredients">
-        <h4>🥬 食材</h4>
-        <ul>
+
+      {/* 食材 */}
+      <div className="recipe-card__section">
+        <h4>
+          <span className="recipe-card__section-icon">🥬</span>
+          食材清单
+        </h4>
+        <div className="recipe-card__ingredient-list">
           {recipe.ingredients.map((ing, i) => (
-            <li key={i}>{ing}</li>
+            <span key={i} className="ingredient-tag">{ing}</span>
           ))}
-        </ul>
+        </div>
       </div>
-      <div className="recipe-card__steps">
-        <h4>👨‍🍳 步骤</h4>
-        <ol>
+
+      {/* 步骤 */}
+      <div className="recipe-card__section">
+        <h4>
+          <span className="recipe-card__section-icon">👨‍🍳</span>
+          烹饪步骤
+        </h4>
+        <ol className="recipe-card__steps">
           {recipe.steps.map((step, i) => (
-            <li key={i}>{step}</li>
+            <li key={i}>
+              <span className="step-number">{i + 1}</span>
+              <span>{step}</span>
+            </li>
           ))}
         </ol>
       </div>

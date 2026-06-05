@@ -2,59 +2,104 @@
   display: flex;
   flex-direction: column;
   min-height: calc(100dvh - 40px);
+  position: relative;
 }
 
+/* ===== 飘浮装饰 ===== */
+.home__decoration {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.float-item {
+  position: absolute;
+  font-size: 28px;
+  opacity: 0.12;
+  animation: floatAround 8s ease-in-out infinite;
+}
+
+.float-item--1 { top: 8%; left: 5%; animation-delay: 0s; font-size: 32px; }
+.float-item--2 { top: 15%; right: 8%; animation-delay: 1.5s; font-size: 36px; }
+.float-item--3 { top: 45%; left: 3%; animation-delay: 3s; font-size: 26px; }
+.float-item--4 { top: 55%; right: 5%; animation-delay: 4.5s; font-size: 30px; }
+.float-item--5 { top: 75%; left: 8%; animation-delay: 6s; font-size: 28px; }
+.float-item--6 { bottom: 10%; right: 10%; animation-delay: 2s; font-size: 24px; }
+
+@keyframes floatAround {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(8px, -12px) rotate(5deg); }
+  50% { transform: translate(-4px, -20px) rotate(-3deg); }
+  75% { transform: translate(-10px, -8px) rotate(4deg); }
+}
+
+/* ===== 头部 ===== */
 .home__header {
   text-align: center;
-  padding: 40px 0 32px;
+  padding: 32px 0 28px;
+  position: relative;
+  z-index: 1;
+}
+
+.home__logo {
+  margin-bottom: 16px;
+}
+
+.home__logo-emoji {
+  font-size: 64px;
+  display: inline-block;
+  filter: drop-shadow(0 8px 16px rgba(255, 140, 66, 0.25));
 }
 
 .home__title {
-  font-size: 36px;
-  font-weight: 800;
+  font-size: 38px;
+  font-weight: 900;
   color: var(--color-text);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-
-.home__emoji {
-  font-size: 42px;
-  animation: bounceIn 0.6s ease;
+  letter-spacing: 4px;
+  margin-bottom: 6px;
 }
 
 .home__subtitle {
-  margin-top: 8px;
   font-size: 16px;
   color: var(--color-text-light);
+  margin-bottom: 12px;
 }
 
+.home__quote {
+  font-size: 14px;
+  color: var(--color-text-light);
+  font-style: italic;
+  opacity: 0.7;
+}
+
+/* ===== 卡片 ===== */
 .home__cards {
   flex: 1;
   display: flex;
   flex-direction: column;
   gap: 16px;
   padding: 0 4px;
+  position: relative;
+  z-index: 1;
 }
 
 .home-card {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 32px 24px;
-  border-radius: 20px;
-  background: white;
-  box-shadow: var(--shadow);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  gap: 16px;
+  padding: 24px;
+  border-radius: 24px;
+  text-align: left;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
-  min-height: 160px;
+  position: relative;
+  overflow: hidden;
 }
 
 .home-card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-hover);
+  transform: translateY(-4px);
 }
 
 .home-card:active {
@@ -62,42 +107,153 @@
 }
 
 .home-card--single {
-  background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);
+  background: linear-gradient(135deg, #FFF5EB 0%, #FFECD2 50%, #FFE0C0 100%);
+  box-shadow: 0 4px 20px rgba(255, 160, 100, 0.15);
+}
+
+.home-card--single:hover {
+  box-shadow: 0 8px 30px rgba(255, 160, 100, 0.25);
 }
 
 .home-card--family {
-  background: linear-gradient(135deg, #FFF8E1 0%, #FFECB3 100%);
+  background: linear-gradient(135deg, #FFF9E8 0%, #FFF3D0 50%, #FFEBB8 100%);
+  box-shadow: 0 4px 20px rgba(255, 180, 80, 0.15);
 }
 
-.home-card__emoji {
+.home-card--family:hover {
+  box-shadow: 0 8px 30px rgba(255, 180, 80, 0.25);
+}
+
+.home-card__illustration {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.home-card__illust-emoji {
   font-size: 48px;
-  margin-bottom: 12px;
+  position: relative;
+  z-index: 2;
+}
+
+/* 单人卡片装饰 - 跳跃的圆点 */
+.home-card__illust-dots {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  gap: 4px;
+}
+
+.home-card__illust-dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  opacity: 0.4;
+  animation: crackle 1.5s infinite;
+}
+
+.home-card__illust-dots span:nth-child(2) { animation-delay: 0.3s; }
+.home-card__illust-dots span:nth-child(3) { animation-delay: 0.6s; }
+
+/* 家庭卡片装饰 - 蒸汽 */
+.home-card__illust-steam {
+  position: absolute;
+  top: -4px;
+  display: flex;
+  gap: 8px;
+}
+
+.steam {
+  width: 4px;
+  height: 16px;
+  border-radius: 2px;
+  background: rgba(255, 140, 66, 0.3);
+  animation: steam 3s infinite;
+}
+
+.steam:nth-child(2) { animation-delay: 0.5s; height: 20px; }
+.steam:nth-child(3) { animation-delay: 1s; height: 14px; }
+
+.home-card__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .home-card__title {
-  font-size: 22px;
-  font-weight: 700;
+  font-size: 20px;
+  font-weight: 800;
   color: var(--color-text);
-  margin-bottom: 4px;
 }
 
 .home-card__desc {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--color-text-light);
+  line-height: 1.4;
 }
 
+.home-card__arrow {
+  font-size: 24px;
+  color: var(--color-text-light);
+  opacity: 0.4;
+  transition: all 0.3s;
+}
+
+.home-card:hover .home-card__arrow {
+  opacity: 1;
+  transform: translateX(4px);
+  color: var(--color-primary);
+}
+
+/* ===== 底部 ===== */
 .home__footer {
   text-align: center;
-  padding: 24px 0 12px;
+  padding: 28px 0 8px;
+  position: relative;
+  z-index: 1;
 }
 
 .home__link {
-  background: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: white;
+  border-radius: 24px;
+  padding: 14px 24px;
+  box-shadow: var(--shadow-sm);
   font-size: 15px;
-  color: var(--color-text-light);
-  padding: 12px 20px;
+  color: var(--color-text-medium);
+  font-weight: 600;
+  width: 100%;
+  transition: all 0.25s;
 }
 
 .home__link:hover {
+  box-shadow: var(--shadow);
   color: var(--color-primary);
+}
+
+.home__link-icon {
+  font-size: 20px;
+}
+
+.home__link-hint {
+  font-size: 12px;
+  color: var(--color-text-light);
+  font-weight: 400;
+  margin-left: 4px;
+}
+
+.home__footer-text {
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--color-text-light);
+  opacity: 0.6;
 }
