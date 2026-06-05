@@ -1,4 +1,8 @@
-.custom-page { padding: 0 20px 32px; }
+.custom-page {
+  width: min(980px, 100%);
+  margin: 0 auto;
+  padding: 24px 20px 44px;
+}
 .custom-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; }
 
 .form-card { margin-bottom:20px; }
@@ -21,12 +25,12 @@
 .fcheck { display:flex; align-items:center; gap:8px; font-size:14px; color:var(--gray-700); cursor:pointer; font-weight:500; }
 .fcheck input[type="checkbox"] { width:20px; height:20px; accent-color:var(--orange-500); }
 
-.filter-bar { display:flex; align-items:center; gap:8px; margin-bottom:16px; }
+.filter-bar { display:flex; align-items:center; gap:8px; margin-bottom:16px; flex-wrap: wrap; }
 .fbtn { padding:8px 16px; border-radius:24px; background:white; border:1.5px solid var(--gray-300); font-size:14px; font-weight:600; color:var(--gray-700); transition:all 0.2s; }
 .fbtn-on { border-color:var(--orange-500); background:var(--orange-50); color:var(--orange-500); }
 .fcount { margin-left:auto; font-size:13px; color:var(--gray-500); }
 
-.rlist-item { display:flex; align-items:center; gap:12px; margin-bottom:8px; padding:16px; }
+.rlist-item { display:flex; align-items:center; gap:12px; margin-bottom:10px; padding:16px; }
 .rlist-info { flex:1; }
 .rlist-info h4 { font-size:17px; font-weight:700; display:flex; align-items:center; gap:8px; margin-bottom:6px; }
 .preset-badge { font-size:11px; padding:2px 8px; border-radius:10px; background:var(--orange-50); color:var(--orange-500); font-weight:600; }
@@ -37,3 +41,15 @@
 
 .empty-state { text-align:center; padding:60px 20px; color:var(--gray-500); }
 .empty-emoji { font-size:48px; margin-bottom:12px; }
+
+@media (min-width: 760px) {
+  .custom-page { padding-top: 34px; }
+  .custom-page > .rlist-item {
+    width: calc(50% - 7px);
+    display: inline-flex;
+    vertical-align: top;
+  }
+  .form-card {
+    max-width: 720px;
+  }
+}

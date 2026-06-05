@@ -1,4 +1,8 @@
-.family-page { padding: 0 20px 32px; }
+.family-page {
+  width: min(860px, 100%);
+  margin: 0 auto;
+  padding: 24px 20px 44px;
+}
 .family-header { margin-bottom: 20px; }
 .family-header .page-title { margin-bottom: 4px; }
 
@@ -12,7 +16,7 @@
 }
 
 .flabel { font-size:15px; font-weight:700; margin-bottom:14px; }
-.taste-row { display:flex; gap:8px; }
+.taste-row { display:grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap:8px; }
 .taste-btn {
   flex:1; display:flex; flex-direction:column; align-items:center; padding:14px 6px;
   border-radius: var(--radius); background: var(--gray-50);
@@ -32,8 +36,27 @@
 .loading-area { text-align:center; padding:40px 0; }
 .loading-area p { margin-top:12px; font-size:15px; color:var(--gray-500); }
 
-.meal-result { margin-top:20px; }
+.meal-result { margin-top:24px; }
 .meal-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; }
 .meal-header h2 { font-size:24px; font-weight:800; }
-.meal-group { margin-bottom:8px; }
+.meal-group { margin-bottom:12px; }
 .meal-group h3 { font-size:18px; font-weight:700; margin-bottom:14px; padding-left:4px; }
+
+@media (min-width: 820px) {
+  .family-page { padding-top: 34px; }
+  .family-page > .card,
+  .family-page > .btn,
+  .family-page > .error-box,
+  .family-page > .loading-area {
+    max-width: 620px;
+  }
+  .meal-result {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    align-items: start;
+  }
+  .meal-header {
+    grid-column: 1 / -1;
+  }
+}

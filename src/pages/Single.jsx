@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { searchNearbyFood, reverseGeocode } from '../utils/amap'
+import { geocodeAddress, searchNearbyFood, reverseGeocode } from '../utils/amap'
 import { pickRestaurant } from '../utils/algorithm'
 import { addHistory, getHistory, removeHistoryItem } from '../utils/storage'
 import RestaurantCard from '../components/RestaurantCard'
@@ -88,20 +88,19 @@ export default function Single() {
   }
 
   const handleNavigate = () => {
-    if (picked) window.open(`https://uri.amap.com/marker?position=${picked.lng},${picked.lat}&name=${picked.name}`, '_blank')
+    if (picked) {
+      const url = `https://uri.amap.com/marker?position=${picked.lng},${picked.lat}&name=${encodeURIComponent(picked.name)}`
+      window.open(url, '_blank', 'noopener,noreferrer')
+    }
   }
 
   const handleManualSearch = async () => {
     if (!manualCity.trim()) return
     try {
-      const url = `https://restapi.amap.com/v3/geocode/geo?key=6103cc3169a3d3e47c68c1a636d8d139&address=${encodeURIComponent(manualCity)}`
-      const res = await fetch(url); const data = await res.json()
-      if (data.status==='1' && data.geocodes?.length>0) {
-        const [lng, lat] = data.geocodes[0].location.split(',').map(parseFloat)
-        const geo = await reverseGeocode(lng, lat)
-        setLocation({lng,lat}); setAddress(geo.city||manualCity); setLocationDenied(false); setError('')
-      } else { setError('没找到这个城市') }
-    } catch { setError('搜索失败') }
+      const { lng, lat } = await geocodeAddress(manualCity)
+      const geo = await reverseGeocode(lng, lat)
+      setLocation({lng,lat}); setAddress(geo.city||manualCity); setLocationDenied(false); setError('')
+    } catch (e) { setError(e.message || '搜索失败') }
   }
 
   const fmt = (ts) => {

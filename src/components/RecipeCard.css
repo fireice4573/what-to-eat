@@ -1,9 +1,10 @@
 .rccard {
-  background: white; border-radius: var(--radius-xl); padding: 22px 18px 18px;
-  margin-bottom: 16px; box-shadow: var(--shadow);
+  background: var(--surface); border-radius: var(--radius-lg); padding: 20px 18px 18px;
+  margin-bottom: 16px; box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(87,66,40,0.08);
   border-left: 5px solid var(--orange-500);
 }
-.rccard-child { border-left-color: var(--green-500); background: linear-gradient(180deg, #FFFFFF 0%, #FAFFFA 100%); }
+.rccard-child { border-left-color: var(--green-500); background: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(250,255,250,0.92) 100%); }
 
 .rccard-head { display: flex; gap: 14px; margin-bottom: 16px; }
 .rccard-emoji-bg {
@@ -14,10 +15,10 @@
 .rccard-child .rccard-emoji-bg { background: var(--green-100); }
 
 .rccard-head-info { flex: 1; min-width: 0; }
-.rccard-head-info h3 { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+.rccard-head-info h3 { font-size: 20px; font-weight: 900; margin-bottom: 8px; }
 .rccard-chips { display: flex; gap: 6px; flex-wrap: wrap; }
 
-.chip { font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 12px; }
+.chip { font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 999px; }
 .chip-time { background: var(--gray-100); color: var(--gray-700); }
 .chip-taste { background: var(--orange-50); color: var(--orange-500); }
 .chip-audience { background: var(--orange-50); color: var(--orange-500); }

@@ -1,7 +1,8 @@
 .rcard {
-  background: white; border-radius: var(--radius-xl);
+  background: var(--surface); border-radius: var(--radius-xl);
   padding: 24px 20px 20px; box-shadow: var(--shadow-lg);
   margin-bottom: 8px; position: relative; overflow: hidden;
+  border: 1px solid rgba(87,66,40,0.08);
 }
 .rcard::before {
   content: ''; position: absolute; top: -40px; right: -30px;
@@ -10,10 +11,10 @@
 }
 
 .rcard-badge {
-  display: inline-block; background: linear-gradient(135deg, var(--orange-500), var(--red-500));
+  display: inline-block; background: var(--gray-900);
   color: white; font-size: 14px; font-weight: 700; padding: 6px 18px;
-  border-radius: 20px; margin-bottom: 18px; letter-spacing: 1px;
-  box-shadow: 0 4px 12px rgba(255,122,47,0.3);
+  border-radius: 999px; margin-bottom: 18px; letter-spacing: 0;
+  box-shadow: var(--shadow-sm);
 }
 
 .rcard-icon-row {
@@ -39,7 +40,7 @@
 .rcard-actions { display: flex; gap: 8px; }
 .ract {
   flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;
-  padding: 12px 6px; border-radius: 14px; font-size: 13px; font-weight: 600;
+  padding: 12px 6px; border-radius: 12px; font-size: 13px; font-weight: 700;
   transition: all 0.2s;
 }
 .ract:active { transform: scale(0.95); }
