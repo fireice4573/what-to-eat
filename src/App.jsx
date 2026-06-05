@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
+import { Analytics } from '@vercel/analytics/react'
 import Home from './pages/Home'
 import Single from './pages/Single'
 import Family from './pages/Family'
@@ -13,6 +14,7 @@ export default function App() {
         <Route path="/family" element={<Family />} />
         <Route path="/custom-recipes" element={<CustomRecipes />} />
       </Routes>
+      <Analytics />
     </div>
   )
 }
