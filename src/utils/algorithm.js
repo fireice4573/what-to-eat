@@ -47,19 +47,42 @@ function getKeyIngredients(dish) {
 }
 
 /**
- * 随机抽取不重复主食材的菜
+ * 随机抽取不重复主食材的菜（逐个抽取，同批次内部也去重）
  */
 function pickDiverse(arr, count, alreadyPicked = []) {
   const used = new Set(alreadyPicked.flatMap(d => getKeyIngredients(d)))
-  // 先挑主食材不撞的（菜的所有关键食材都不在已用集合中）
-  const diverse = arr.filter(d => {
-    const keys = getKeyIngredients(d)
-    return !keys.some(k => used.has(k))
-  })
-  // 不够就回退到全量
-  const pool = diverse.length >= count ? diverse : arr
-  const shuffled = [...pool].sort(() => Math.random() - 0.5)
-  return shuffled.slice(0, Math.min(count, pool.length))
+  const available = [...arr]
+  const picked = []
+
+  for (let i = 0; i < count && available.length > 0; i++) {
+    // 过滤：所有关键食材都不在已用集合中
+    const diverse = available.filter(d => {
+      const keys = getKeyIngredients(d)
+      return keys.length > 0 && !keys.some(k => used.has(k))
+    })
+
+    if (diverse.length === 0) break
+
+    // 随机选一个
+    const chosen = diverse[Math.floor(Math.random() * diverse.length)]
+    picked.push(chosen)
+
+    // 把这个菜的食材加入已用集合
+    getKeyIngredients(chosen).forEach(k => used.add(k))
+
+    // 从可用列表中移除此菜
+    const idx = available.findIndex(d => d.id === chosen.id || d.name === chosen.name)
+    if (idx >= 0) available.splice(idx, 1)
+  }
+
+  // 如果去重后数量不够，从剩余菜中补齐
+  if (picked.length < count) {
+    const remaining = available.filter(d => !picked.find(p => p.id === d.id || p.name === d.name))
+    const shuffled = [...remaining].sort(() => Math.random() - 0.5)
+    picked.push(...shuffled.slice(0, count - picked.length))
+  }
+
+  return picked
 }
 
 export function generateMealPlan(adults = 0, children = 0, taste = 'medium') {
