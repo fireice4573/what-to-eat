@@ -1,8 +1,10 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
+import html2canvas from 'html2canvas'
 import { generateMealPlan, getAllRecipes } from '../utils/algorithm'
 import NumberPicker from '../components/NumberPicker'
 import RecipeCard from '../components/RecipeCard'
+import ShareCard from '../components/ShareCard'
 import './Family.css'
 
 const TASTES = [
@@ -21,6 +23,8 @@ export default function Family() {
   const [error, setError] = useState('')
   const [showShare, setShowShare] = useState(false)
   const [toast, setToast] = useState('')
+  const [screenshotting, setScreenshotting] = useState(false)
+  const cardRef = useRef(null)
 
   const handleGenerate = () => {
     if (adults+children===0) { setError('至少得有一个人吃饭吧～'); return }
@@ -47,6 +51,32 @@ export default function Family() {
       else { setToast('复制失败') }
     }
     setShowShare(false)
+  }
+
+  const saveImage = async () => {
+    setShowShare(false)
+    setScreenshotting(true)
+    // Wait for the hidden card to render
+    await new Promise(r => setTimeout(r, 300))
+    try {
+      const canvas = await html2canvas(cardRef.current, {
+        backgroundColor: null,
+        scale: 2,
+        useCORS: true,
+      })
+      canvas.toBlob(blob => {
+        const url = URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = `今天吃啥_${new Date().toLocaleDateString('zh-CN').replace(/\//g, '-')}.png`
+        a.click()
+        URL.revokeObjectURL(url)
+        setToast('✅ 图片已保存！')
+      }, 'image/png')
+    } catch (e) {
+      setToast('😢 生成失败，请重试')
+    }
+    setScreenshotting(false)
   }
 
   return (
@@ -111,12 +141,27 @@ export default function Family() {
             <h3>分享菜单</h3>
             {navigator.share && <button onClick={()=>doShare('native')}>📤 直接分享</button>}
             <button onClick={()=>doShare('copy')}>📋 复制文案</button>
+            <button onClick={saveImage}>📸 保存图片</button>
             <button className="cancel-btn" onClick={()=>setShowShare(false)}>取消</button>
           </div>
         </div>
       )}
 
       {toast && <div className="toast" onClick={()=>setToast('')}>{toast}</div>}
+
+      {/* Hidden share card for screenshot */}
+      <div style={{ position: 'absolute', left: '-9999px', top: 0 }}>
+        <div ref={cardRef}>
+          {mealPlan && (
+            <ShareCard
+              mealPlan={mealPlan}
+              adults={adults}
+              children={children}
+              dateStr={new Date().toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' })}
+            />
+          )}
+        </div>
+      </div>
     </div>
   )
 }

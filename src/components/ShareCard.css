@@ -1,0 +1,178 @@
+.share-card {
+  width: 400px;
+  padding: 28px 24px 24px;
+  background: linear-gradient(160deg, #FFF8F2 0%, #FFF3E8 30%, #FFF8F4 100%);
+  border-radius: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  box-shadow: 0 8px 32px rgba(200, 120, 40, 0.12);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative top bar */
+.share-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, #F97316, #FB923C, #F97316);
+  border-radius: 20px 20px 0 0;
+}
+
+/* Header */
+.sc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+  padding-top: 4px;
+}
+
+.sc-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sc-logo {
+  font-size: 28px;
+}
+
+.sc-brand-name {
+  font-size: 18px;
+  font-weight: 800;
+  color: #333;
+  letter-spacing: 1px;
+}
+
+.sc-domain {
+  font-size: 11px;
+  color: #F97316;
+  font-weight: 600;
+  background: rgba(249, 115, 22, 0.08);
+  padding: 4px 10px;
+  border-radius: 99px;
+}
+
+/* Title */
+.sc-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 2px dashed rgba(249, 115, 22, 0.18);
+}
+
+.sc-title {
+  font-size: 22px;
+  font-weight: 900;
+  color: #333;
+  margin: 0;
+}
+
+.sc-people {
+  font-size: 14px;
+  font-weight: 700;
+  color: #F97316;
+  background: rgba(249, 115, 22, 0.1);
+  padding: 5px 14px;
+  border-radius: 99px;
+}
+
+/* Groups */
+.sc-group {
+  margin-bottom: 18px;
+}
+
+.sc-group-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: #555;
+  margin: 0 0 10px 0;
+  padding-left: 2px;
+}
+
+/* Dish card */
+.sc-dish {
+  background: white;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  border-left: 4px solid #F97316;
+}
+
+.sc-dish-name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.sc-dish-emoji {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.sc-dish-name {
+  font-size: 16px;
+  font-weight: 800;
+  color: #222;
+  flex: 1;
+}
+
+.sc-dish-time {
+  font-size: 11px;
+  font-weight: 700;
+  color: #999;
+  background: #F5F5F5;
+  padding: 3px 10px;
+  border-radius: 99px;
+  flex-shrink: 0;
+}
+
+.sc-dish-ingredients {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.sc-ing-tag {
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 99px;
+  background: #FFF8F2;
+  color: #D97706;
+  font-weight: 600;
+  border: 1px solid rgba(249, 115, 22, 0.15);
+}
+
+/* Footer */
+.sc-footer {
+  text-align: center;
+  margin-top: 8px;
+  padding-top: 18px;
+  border-top: 2px dashed rgba(249, 115, 22, 0.18);
+}
+
+.sc-cta {
+  font-size: 15px;
+  font-weight: 700;
+  color: #666;
+  margin: 0 0 8px 0;
+}
+
+.sc-date {
+  font-size: 13px;
+  color: #BBB;
+  font-weight: 600;
+  margin: 0 0 14px 0;
+}
+
+.sc-watermark {
+  font-size: 11px;
+  color: #DDD;
+  font-weight: 500;
+  margin: 0;
+}
