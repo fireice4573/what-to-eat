@@ -24,6 +24,7 @@ export default function Family() {
   const [showShare, setShowShare] = useState(false)
   const [toast, setToast] = useState('')
   const [screenshotting, setScreenshotting] = useState(false)
+  const [previewUrl, setPreviewUrl] = useState('')
   const cardRef = useRef(null)
 
   const handleGenerate = () => {
@@ -56,23 +57,36 @@ export default function Family() {
   const saveImage = async () => {
     setShowShare(false)
     setScreenshotting(true)
-    // Wait for the hidden card to render
     await new Promise(r => setTimeout(r, 300))
     try {
       const canvas = await html2canvas(cardRef.current, {
-        backgroundColor: null,
+        backgroundColor: '#FFF8F2',
         scale: 2,
         useCORS: true,
       })
-      canvas.toBlob(blob => {
+      const blob = await new Promise(r => canvas.toBlob(r, 'image/png'))
+      const file = new File([blob], `今天吃啥_${new Date().toLocaleDateString('zh-CN').replace(/\//g, '-')}.png`, { type: 'image/png' })
+
+      // Mobile: try share API first (can save to gallery)
+      if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({ files: [file] })
+        setToast('✅ 图片已分享！')
+      }
+      // Desktop or share API without file support: download
+      else if (!/Mobi|Android|iPhone/i.test(navigator.userAgent)) {
         const url = URL.createObjectURL(blob)
         const a = document.createElement('a')
         a.href = url
-        a.download = `今天吃啥_${new Date().toLocaleDateString('zh-CN').replace(/\//g, '-')}.png`
+        a.download = file.name
         a.click()
         URL.revokeObjectURL(url)
         setToast('✅ 图片已保存！')
-      }, 'image/png')
+      }
+      // Mobile fallback: show image preview for long-press save
+      else {
+        const url = URL.createObjectURL(blob)
+        setPreviewUrl(url)
+      }
     } catch (e) {
       setToast('😢 生成失败，请重试')
     }
@@ -143,6 +157,23 @@ export default function Family() {
             <button onClick={()=>doShare('copy')}>📋 复制文案</button>
             <button onClick={saveImage}>📸 保存图片</button>
             <button className="cancel-btn" onClick={()=>setShowShare(false)}>取消</button>
+          </div>
+        </div>
+      )}
+
+      {/* Image preview for mobile long-press save */}
+      {previewUrl && (
+        <div className="modal-overlay" onClick={()=>{ URL.revokeObjectURL(previewUrl); setPreviewUrl('') }}>
+          <div className="modal-preview" onClick={e=>e.stopPropagation()}>
+            <div className="modal-preview-header">
+              <span>📸 菜谱图片</span>
+              <button className="btn btn-secondary" style={{padding:'6px 14px',fontSize:'13px'}}
+                onClick={()=>{ URL.revokeObjectURL(previewUrl); setPreviewUrl('') }}>✕ 关闭</button>
+            </div>
+            <img src={previewUrl} alt="今日菜单" style={{width:'100%',borderRadius:'12px'}} />
+            <p style={{textAlign:'center',marginTop:'12px',fontSize:'13px',color:'#999'}}>
+              👆 长按上方图片即可保存到相册
+            </p>
           </div>
         </div>
       )}
