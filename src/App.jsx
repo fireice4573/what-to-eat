@@ -13,6 +13,11 @@ export default function App() {
         <Route path="/family" element={<Family />} />
         <Route path="/custom-recipes" element={<CustomRecipes />} />
       </Routes>
+      <footer className="site-footer">
+        <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">
+          鄂ICP备2026028597号
+        </a>
+      </footer>
     </div>
   )
 }
